@@ -75,9 +75,6 @@ void nvim_win_set_buf(Window window, Buffer buffer, Error *err)
   validate_cursor();
 
   restore_win(save_curwin, save_curtab, false);
-
-  autocmd_check_cursor_moved(win, EVENT_CURSORMOVED);
-  autocmd_check_window_scrolled(win);
 }
 
 /// Gets the (1,0)-indexed cursor position in the window. |api-indexing|
