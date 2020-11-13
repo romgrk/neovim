@@ -192,7 +192,7 @@ void nvim_win_set_height(Window window, Integer height, Error *err)
   curwin = savewin;
   try_end(err);
 
-  FOR_ALL_WINDOWS_IN_TAB(wp, curtab) {
+  FOR_ALL_TAB_WINDOWS(tp, wp) {
     autocmd_check_window_scrolled(wp);
   }
 }
@@ -241,7 +241,7 @@ void nvim_win_set_width(Window window, Integer width, Error *err)
   curwin = savewin;
   try_end(err);
 
-  FOR_ALL_WINDOWS_IN_TAB(wp, curtab) {
+  FOR_ALL_TAB_WINDOWS(tp, wp) {
     autocmd_check_window_scrolled(wp);
   }
 }
