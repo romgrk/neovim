@@ -74,6 +74,8 @@ void nvim_win_set_buf(Window window, Buffer buffer, Error *err)
   // So do it now.
   validate_cursor();
 
+  apply_autocmds(EVENT_BUFWINENTER, NULL, NULL, false, buf);
+
   restore_win(save_curwin, save_curtab, false);
 }
 
