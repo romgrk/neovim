@@ -6983,6 +6983,7 @@ void ex_splitview(exarg_T *eap)
     do_exedit(eap, old_curwin);
   }
 
+
 theend:
   xfree(fname);
 }
