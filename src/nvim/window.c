@@ -2200,11 +2200,15 @@ bool last_nonfloat(win_T *wp) FUNC_ATTR_PURE FUNC_ATTR_WARN_UNUSED_RESULT
 /// @return true if all floating windows can be closed
 static bool can_close_floating_windows(tabpage_T *tab, bool forceit)
 {
+  if (forceit) {
+    return true;
+  }
+
   FOR_ALL_WINDOWS_IN_TAB(wp, tab) {
     buf_T *buf = wp->w_buffer;
     int need_hide = (bufIsChanged(buf) && buf->b_nwindows <= 1);
 
-    if (need_hide && !buf_hide(buf) && !forceit) {
+    if (need_hide && !buf_hide(buf)) {
       return false;
     }
   }
@@ -2310,8 +2314,7 @@ int win_close(win_T *win, bool free_buf, bool force)
           win_close(wpp, free_buf, force);
         }
       }
-    }
-    else {
+    } else {
       EMSG(e_floatonly);
       return FAIL;
     }
@@ -3435,7 +3438,9 @@ close_others (
       if (bufIsChanged(wp->w_buffer))
         continue;
     }
-    win_close(wp, !buf_hide(wp->w_buffer) && !bufIsChanged(wp->w_buffer), false);
+    win_close(wp,
+              !buf_hide(wp->w_buffer) && !bufIsChanged(wp->w_buffer),
+              false);
   }
 
   if (message && !ONE_WINDOW)
